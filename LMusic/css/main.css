@@ -1,0 +1,583 @@
+/* btnFont字体 */
+@font-face {
+    font-family: 'btnFont';
+    src: url('../font/btnFont.woff2');
+}
+
+/* 配色信息 */
+:root {
+    --background: #333333;
+    --color: #EEEEEE;
+    --cover: none;
+    --mask: rgba(0, 0, 0, 0.5);
+    --cover-background: #555555;
+    --lyric-color: #AAAAAA;
+    --btn-color: #EEEEEE;
+    --total-bar-color: #AAAAAA;
+    --load-bar-background: #CCCCCC;
+    --current-bar-background: #EEEEEE;
+    --user-bar-background: #FFFFFF;
+    --info-background: rgba(0, 0, 0, 0.5);
+}
+
+/* 公共样式 */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+/* 页面容器设置 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--color);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* 模糊的背景图 */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: var(--cover);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    filter: blur(20px);
+}
+
+/* 透明遮罩 */
+.mask {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: var(--mask);
+    justify-content: center;
+}
+
+/* 顶部歌曲信息 */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header div {
+    line-height: 2em;
+}
+
+/* 页面中部 */
+main {
+    display: flex;
+}
+
+/* 封面 */
+#cover {
+    display: flex;
+    margin: 0 auto;
+    border-radius: 10%;
+    background-color: var(--cover-background);
+    background-image: var(--cover);
+    background-size: 100% 100%;
+    color: rgba(0, 0, 0, 0);
+    justify-content: center;
+    align-items: center;
+}
+
+#cover .mask {
+    display: none;
+    flex-direction: row;
+    width: fit-content;
+    height: fit-content;
+    color: var(--color);
+    font-family: 'btnFont';
+}
+
+#cover .mask div {
+    display: inline-block;
+    background-color: var(--mask);
+    cursor: pointer;
+}
+
+#cover .mask div:hover {
+    background: none;
+}
+
+/* 无封面图片 */
+#cover.no-cover {
+    color: var(--color);
+}
+
+/* 歌词 */
+#lyric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#lyric.no-lyric {
+    justify-content: center;
+}
+
+/* 暂无歌词提示 */
+#lyric .tip {
+    display: none;
+}
+
+#lyric.no-lyric .tip {
+    display: block;
+}
+
+/* 歌词容器 */
+#lyric .text {
+    flex-shrink: 0;
+    transform: translateY(var(--move));
+    width: 70%;
+    text-align: center;
+    color: var(--lyric-color);
+    transition: transform 0.5s;
+}
+
+#lyric.no-lyric .text {
+    display: none;
+}
+
+/* 第一句歌词 */
+.word:nth-child(1) {
+    margin-top: 0;
+}
+
+/* 当前歌词 */
+#lyric .text .now {
+    color: var(--color);
+    font-weight: 600;
+}
+
+/* 支持逐字滚动的当前歌词 */
+#lyric .text span {
+    background: var(--lyric-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* 底部控制栏 */
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 按钮 */
+.btn {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50%;
+    font-family: 'btnFont';
+    color: var(--btn-color);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 控制条 */
+.bar {
+    width: 0;
+    height: 100%;
+}
+
+/* 总控制条 */
+#totalBar {
+    margin-top: 0;
+    background: var(--total-bar-color);
+    overflow: hidden;
+}
+
+/* 加载进度条 */
+.bar:nth-child(1) {
+    margin-top: 0;
+    background: var(--load-bar-background);
+}
+
+/* 播放时长控制条 */
+.bar:nth-child(2) {
+    background: var(--current-bar-background);
+}
+
+/* 用户控制进度条 */
+.bar:nth-child(3) {
+    background: var(--user-bar-background);
+}
+
+.timeArea {
+    display: none;
+    width: 2px;
+    height: 100%;
+    background: #888888;
+    pointer-events: none;
+}
+
+.info {
+    visibility: hidden;
+    position: absolute;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background: var(--info-background);
+    align-self: center;
+    transition: opacity 1s;
+}
+
+.info.hide {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 屏幕宽高比大于1/1 */
+@media (min-aspect-ratio: 1 / 1) {
+    header {
+        margin-left: 50%;
+        width: 50%;
+        height: 26vh;
+    }
+
+    #title {
+        font-size: 3vh;
+    }
+    
+    #artist {
+        font-size: 2.4vh;
+    }
+
+    main {
+        flex: 1;
+    }
+
+    #cover {
+        width: 40vh;
+        height: 40vh;
+        font-size: 2.5vh;
+    }
+
+    #cover .mask {
+        border-radius: 2.5vh;
+        font-size: 3vh;
+        box-shadow: 0 0 0.25vh 0.25vh #FFFFFF,
+                    0 0 0.25vh 0.25vh #000000;
+    }
+    
+    #cover .mask div {
+        padding: 1vh;
+    }
+
+    #lyric {
+        width: 50%;
+        height: 40vh;
+    }
+
+    #lyric.no-lyric .tip {
+        font-size: 2.5vh;
+    }
+
+    #lyric .text div {
+        line-height: 5vh;
+    }
+
+    .word {
+        margin-top: 5vh;
+        font-size: 2.5vh;
+    }
+
+    .translate {
+        font-size: 2.25vh;
+    }
+
+    footer {
+        height: 8vh;
+    }
+
+    .btn {
+        font-size: 4vh;
+    }
+
+    .btn:nth-child(2) {
+        margin: 0 1vh;
+    }
+
+    .box:not(.volumeBox .box):not(.box ~ .box) {
+        display: flex;
+        flex-direction: column;
+        margin: 0 1vh;
+        width: 40%;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .box .text {
+        display: flex;
+        height: 3vh;
+    }
+
+    .box .text div {
+        display: flex;
+        font-size: 2vh;
+        align-items: center;
+    }
+
+    #musicInfo {
+        flex: 1;
+    }
+
+    #infoText {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .bar {
+        margin-top: -1vh;
+    }
+
+    #totalBar {
+        width: 100%;
+        height: 1vh;
+        border-radius: 0.5vh;
+    }
+
+    .timeArea {
+        margin-top: -1vh;
+    }
+
+    .box ~ .box {
+        display: flex;
+        margin-right: 1vh;
+        width: 3.5vh;
+        height: 3.5vh;
+        font-size: 2.5vh;
+        border: var(--btn-color) solid 0.25vh;
+        border-radius: 2vh;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .volumeBox {
+        display: flex;
+        width: 14.5vh;
+    }
+
+    .volumeBox .box {
+        display: flex;
+        width: 3.5vh;
+        height: 3.5vh;
+        border: var(--btn-color) solid 0.25vh;
+        border-radius: 2vh;
+        justify-content: center;
+        align-items: center;
+        transition: width 0.5s;
+    }
+
+    .box .btn {
+        font-size: 2.5vh;
+    }
+
+    .box ~ .volumeBox .bar {
+        --volume: 100%;
+        margin: 0;
+        width: 0;
+        height: 0.5vh;
+        border-radius: 0.25vh;
+        background: linear-gradient(to right, var(--user-bar-background) 0 , var(--user-bar-background) var(--volume), var(--total-bar-color) var(--volume), var(--total-bar-color) 100%);
+        transition: margin 0.5s, width 0.5s;
+    }
+
+    .volumeBox .box div:nth-child(3) {
+        width: 0;
+        font-size: 1.25vh;
+        transition: width 0.5s;
+    }
+
+    .volumeBox .box:hover {
+        width: 14vh;
+    }
+
+    .volumeBox .box:hover .bar {
+        margin: 0 0.5vh;
+        width: 7vh;
+    }
+
+    .volumeBox .box:hover div:nth-child(3) {
+        width: 2.5vh;
+    }
+
+    .info {
+        padding: 1vh;
+        border-radius: 1vh;
+        font-size: 2.5vh;
+        box-shadow: 0 0 0.25vh 0.25vh #FFFFFF,
+                    0 0 0.25vh 0.25vh #000000;
+    }
+}
+
+/* 屏幕宽高比小于等于1/1 */
+@media (max-aspect-ratio: 1 / 1) {
+    header {
+        flex: 1;
+        margin-left: 0;
+        width: 100%;
+        max-height: 30vw;
+    }
+
+    #title {
+        font-size: 5vw;
+    }
+    
+    #artist {
+        font-size: 4vw;
+    }
+
+    main {
+        flex-direction: column;
+        min-height: 50vw;
+        align-items: center;
+    }
+
+    #cover {
+        margin: auto;
+        width: 50vw;
+        height: 50vw;
+        font-size: 4.25vw;
+    }
+
+    #cover .mask {
+        border-radius: 6.25vw;
+        font-size: 7.5vw;
+        box-shadow: 0 0 0.625vw 0.625vw #FFFFFF,
+                    0 0 0.625vw 0.625vw #000000;
+    }
+    
+    #cover .mask div {
+        padding: 2.5vw;
+    }
+
+    .lyricMode #cover {
+        display: none;
+    }
+
+    #lyric {
+        display: none;
+        width: 100%;
+    }
+
+    .lyricMode #lyric {
+        flex: 1;
+    }
+
+    .lyricMode #lyric {
+        display: flex;
+        margin: auto;
+        max-height: calc(40vw + var(--add-times) * 8vw);
+        min-height: 40vw;
+    }
+
+    #lyric.no-lyric .tip {
+        font-size: 4vw;
+    }
+
+    #lyric .text div {
+        line-height: 8vw;
+    }
+
+    .word {
+        margin-top: 8vw;
+        font-size: 4vw;
+    }
+
+    .word span {
+        font-size: 4vw;
+    }
+
+    .translate {
+        font-size: 3.5vw;
+    }
+
+    footer {
+        margin-top: 3.5vw;
+        height: 25vw;
+    }
+
+    .btn {
+        font-size: 10vw;
+    }
+
+    .btn:nth-child(2) {
+        margin: 0 6vw;
+        font-size: 12vw;
+    }
+
+    .box:not(.volumeBox .box) {
+        margin-left: 0;
+        width: 0;
+    }
+
+    .timeText {
+        position: absolute;
+        display: flex;
+        bottom: 22.5vw;
+        height: 6vw;
+        font-size: 3vw;
+        align-items: center;
+    }
+
+    .timeText:not(.timeText ~ .timeText) {
+        left: 6%;
+    }
+
+    .timeText:is(.timeText ~ .timeText) {
+        right: 6%;
+    }
+
+    .bar {
+        margin-top: -1vw;
+    }
+
+    #totalBar {
+        position: absolute;
+        left: 15%;
+        bottom: 25vw;
+        width: 70%;
+        height: 1vw;
+        border-radius: 0.5vw;
+    }
+
+    .timeArea {
+        margin-top: -1vw;
+    }
+}
+
+/* 屏幕宽高比小于等于100/108 */
+@media (max-aspect-ratio: 100 / 108) {
+    main {
+        flex: 1;
+    }
+}
+
+/* 屏幕宽高比小于等于100/140 */
+@media (max-aspect-ratio: 100 / 140) {
+    #lyric {
+        display: flex;
+        min-height: 16vw;
+        height: calc(32vw + (var(--add-times) - 6) * 8vw);
+    }
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="LMusic/image/logo.png">
+    <title>LMusic</title>
+</head>
+<style>
+    * {
+        font-size: 0;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+    }
+</style>
+<script src="LMusic.js"></script>
+<script>
+    const music = new LMusic({
+        container: 'body',
+        src: 'LMusic',
+        music: [{
+            src: '/music/我的悲伤是水做的 - ChiliChill,洛天依.mp3',
+            cover: '/cover/我的悲伤是水做的 - ChiliChill,洛天依.jpg',
+            lyric: '/lyric/我的悲伤是水做的 - ChiliChill,洛天依.lmlrc'
+        }, {
+            src: '/music/Ending - Nyarons,Dialock.mp3',
+            cover: '/cover/Ending - Nyarons,Dialock.jpg',
+            lyric: '/lyric/Ending - Nyarons,Dialock.lmlrc'
+        }, {
+            src: '/music/icicles - 磨瀬,初音ミク.mp3',
+            cover: '/cover/icicles - 磨瀬,初音ミク.jpg',
+            lyric: '/lyric/icicles - 磨瀬,初音ミク.lmlrc',
+            time: {
+                // end: 108.5
+            }
+        }, {
+            src: '/music/Azure Galaxy-[Original Mix]- - DJ Soviet.mp3',
+            cover: '/cover/Azure Galaxy-[Original Mix]- - DJ Soviet.png',
+            time: {
+                start: 55,
+                end: 137
+            }
+        }, {
+            src: '/music/サマータイムラブ - Shiggy Jr..ogg',
+            cover: '/cover/サマータイムラブ - Shiggy Jr..jpg',
+            lyric: '/lyric/サマータイムラブ - Shiggy Jr..lmlrc'
+        }, {
+            src: '/music/Thief - Ookay.ogg',
+            cover: '/cover/Thief - Ookay.jpg',
+            lyric: '/lyric/Thief - Ookay.lmlrc'
+        }],
+        autoPlay: true
+    });
+</script>
+
+</html>
